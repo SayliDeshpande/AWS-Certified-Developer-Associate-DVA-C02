@@ -26,7 +26,7 @@ Containers:
 
 Database:
 *	Amazon Aurora
-*	Amazon DynamoDB
+*	[Amazon DynamoDB](#dynamodb)
 *	Amazon ElastiCache
 *	Amazon MemoryDB for Redis
 *	Amazon RDS
@@ -80,3 +80,20 @@ Storage:
 
 
  ## Amazon Athena <a id="athena"></a>
+ ## Amazon DynamoDb <a id="dynamodb"></a>
+ - Amazon DynamoDB is a fully managed NoSQL database service.
+ - Scales to massive workloads, distributed database.
+ - In DynamoDB, tables, items, and attributes are the core components.
+ - A table is a collection of items, and each item is a collection of attributes.
+ - DynamoDB uses primary keys to uniquely identify each item in a table and secondary indexes to provide more querying flexibility. 
+ - DynamoDB is made of Tables
+ - Each table has a Primary Key (must be decided at creation time)
+ - Each table can have an infinite number of items (= rows)
+ - Each item has attributes (can be added over time – can be null)
+ - Maximum size of an item is 400KB
+ - Supported data types :
+   - Scalar types : String, Number, Binary, Boolean, Null
+   - Document type : List, Map
+   - Set types : String Set, Number Set, Binary Set
+ - 
+
