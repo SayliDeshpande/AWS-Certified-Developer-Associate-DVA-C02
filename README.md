@@ -81,6 +81,10 @@ Storage:
 
  ## Amazon Athena <a id="athena"></a>
  ## Amazon DynamoDb <a id="dynamodb"></a>
+
+![image](https://github.com/SayliDeshpande/AWS-Certified-Developer-Associate-DVA-C02/assets/44116052/77531a20-1b22-4ee5-aad6-b599fa99af0c)
+
+
  - Amazon DynamoDB is a fully managed NoSQL database service and is schemaless.
  - other than the primary key attributes, you don't have to define any attributes or data types when you create tables.
  - Scales to massive workloads, distributed database. (Scales horizontaly)
@@ -122,7 +126,15 @@ Storage:
   - At a minimum, DynamoDB projects the key attributes from the base table into the index.
   - two kinds of indexes :
     1. Local secondary index – An index that has the same partition key as the base table, but a different sort key.
-    2. Global secondary index – An index with a partition key and sort key that can be different from those on the base table.
+       * "local" in the sense that every partition of a local secondary index is scoped to a base table partition that has the same partition key value.
+       * total size of indexed items for any one partition key value can't exceed 10 GB
+       * shares provisioned throughput settings for read and write activity with the table it is indexing.
+       * can have up to 5 local secondary indexes 
+    3. Global secondary index – An index with a partition key and sort key that can be different from those on the base table.
+       * A global secondary index is considered "global" because queries on the index can span all of the data in the base table, across all partitions.
+       * no size limitations, separate provisioned throughput settings for read and write activity from base table.
+       * can have up to 20 global secondary indexes (default quota)
+       * Global secondary indexes are sparse by default. 
 ![image](https://github.com/SayliDeshpande/AWS-Certified-Developer-Associate-DVA-C02/assets/44116052/e0830d00-c805-4ad3-b90f-79eba9b4de42)
 - DynamoDB Time to Live (TTL) :
   - Time To Live (TTL) for DynamoDB is a cost-effective method for deleting items that are no longer relevant.
@@ -196,7 +208,12 @@ Storage:
     * UpdateItem – Modifies one or more attributes in an item. You must specify the primary key for the item that you want to modify.
     * DeleteItem – Deletes a single item from a table. You must specify the primary key for the item that you want to delete.
     * BatchWriteItem – Deletes up to 25 items from one or more tables, more efficient than calling DeleteItem multiple times because application only needs a single network round trip to delete the items.
-
+  - Important attributes :
+    * ProjectionExpression : You can add a ProjectionExpression parameter to return only some of the attributes.
+    * KeyConditionExpression : The KeyConditionExpression parameter specifies the key values that you want to query.
+    * FilterExpression : optional FilterExpression to remove certain items from the results before they are returned to you.
+    * UpdateExpression :
+    * ConditionExpression : performs operation(read, update, delete, write) only if a specific ConditionExpression evaluates to true. 
     PartiQL - A SQL-compatible query language
     * ExecuteStatement – Reads multiple items from a table. You can also write or update a single item from a table.
     * BatchExecuteStatement – Writes, updates or reads multiple items from a table, more efficient than ExecuteStatement because application only needs a single network round trip to write/read  items.
@@ -283,4 +300,160 @@ Storage:
         - If an existing partition fills to capacity and more storage space is required.
       * Global secondary indexes in DynamoDB are also composed of partitions.
       * The data in a global secondary index is stored separately from the data in its base table, but index partitions behave in much the same way as table partitions.
+      * Partition Keys go through a hashing algorithm to know to which partition they go to.
+      * WCUs and RCUs are spread evenly across partitions
+      * ![image](https://github.com/SayliDeshpande/AWS-Certified-Developer-Associate-DVA-C02/assets/44116052/c0f3154a-bbbd-4c23-91f4-f8e3e243eae4)
 
+ - On-Demand backup and restore for DynamoDB :
+   - All on-demand backups are cataloged, discoverable, and retained until they are explicitly deleted.
+   - The on-demand backup and restore process scales without degrading the performance or availability of your applications.
+   - uses a new and unique distributed technology to complete backups in seconds regardless of table size
+   - backups that are consistent within seconds across thousands of partitions
+   - There are 2 options for creating and managing DynamoDB on-demand backups :
+     * Amazon Backup service
+       - you can copy your on-demand backups across AWS accounts and Regions
+       - add allocation tags
+       - transition on-demand backups to cold storage for lower costs
+       - Backups are stored in an encrypted vault with a key that is managed by the AWS Backup service.
+       - The backup files have an AWS Backup ARN
+       - backups can only be deleted from the AWS Backup vault, cannot delete from dynamodb console
+     * DynamoDB
+       - no additional cost beyond the normal pricing that's associated with backup storage size
+       - backups cannot be copied to a different account or Region.
+       - 
+ - Point-in-time recovery for DynamoDB :
+   - Amazon DynamoDB point-in-time recovery (PITR) provides automatic backups of your DynamoDB table data.
+   - You can use backups or PITR
+   - you can enable PITR using AWS mgmt console, AWS CLI or DynamoDB API.
+   - Once enabled, point-in-time recovery provides continuous backups until you explicitly turn it off.
+   - The point-in-time recovery process always restores to a new table.
+   - you can restore to any point in time within EarliestRestorableDateTime and LatestRestorableDateTime.
+   - LatestRestorableDateTime : 5 minites before current time
+   - EarliestRestorableDateTime : last 35 days - fixed 35 days (5 calendar weeks) and can't be modified.
+   - If you disable point-in-time recovery and later re-enable it on a table, you reset the start time
+   - restore table has same RCU and WCU as source table.
+  
+ - In-memory acceleration with DynamoDB Accelerator (DAX)
+   - DAX is a DynamoDB-compatible caching service
+   - fast in-memory performance, fast response times for accessing eventually consistent data.
+   - responds in microseconds
+   -  DAX addresses three core scenarios:
+      1. DAX reduces the response times of eventually consistent read workloads from single-digit milliseconds to microseconds.
+      2. DAX reduces operational and application complexity by providing a managed service that is API-compatible, requires minumul functional changes
+      3. For read-heavy or bursty workloads, DAX provides increased throughput and potential operational cost savings
+    
+   -  DAX supports server-side encryption, encryption at rest, encryption in transit.
+   -  DAX runs within VPC dedicated to your AWS account and is isolated from other VPCs. A security group acts as a virtual firewall for your VPC,
+   -  Unless you specify otherwise, your DAX cluster runs within your default VPC.
+   -  To run your application, you launch an Amazon EC2 instance into your Amazon VPC.add an ingress rule to your security group --> protocol (TCP) and port number (8111) 
+   -  You then deploy your application (with the DAX client) on the EC2 instance.
+   -  A DAX cluster consists of one or more nodes.
+   -  Each of the individual nodes in a DAX cluster has its own hostname and port number.
+   -  Each node runs its own instance of the DAX caching software and maintains a single replica of the cached data.
+   -  You can scale DAX cluster either by adding more nodes or using larger node type.
+   -  A DAX cluster can support up to 11 nodes per cluster (the primary node plus a maximum of 10 read replicas).
+   -  Scaling : if large number of requests to access DAX, add more number of read-replicas.
+   -  High Availability : if primary node fails,  DAX automatically fails over to a read replica and designates it as the new primary.
+   -  If a replica node fails, other nodes in the DAX cluster can still serve requests until the failed node can be recovered.
+   -  For maximum fault tolerance, you should deploy read replicas in separate Availability Zones. 
+   -  One of the nodes serves as the primary node for the cluster.
+   -  Additional nodes (if present) serve as read replicas.DAX automatically keeps the replicas in sync with the primary node.
+   -  Your app can access DAX cluster using endpoint for the DAX cluster.
+   -  Every DAX cluster has two distinct caches—an item cache and a query cache.
+   -  DAX supports negative cache entries in both the item cache and the query cache.
+   -  Negatice caching : when DAX can't find requested items in an underlying DynamoDB table, Instead of generating an error, DAX caches an empty result and returns that result to the user.
+   -  Negative cache entry remains until TTL expired, LRU invoked or item is modified using PutItem, UpdateItem, or DeleteItem. 
+   -  Read operations : GetItem, BatchGetItem, Query, Scan
+   -  If DAX has the item available (a cache hit), DAX returns the item to the application without accessing DynamoDB.
+   -  If DAX does not have the item available (a cache miss), DAX passes requests to DynamoDB, also writes results to the cache on the primary node.
+   -  If the request specifies strongly consistent reads, DAX passes requests to DynamoDB, results from DynamoDB are not cached in DAX.
+   -  DAX handles TransactGetItems requests the same way it handles strongly consistent reads. DAX passes requests to DynamoDB, results from DynamoDB are not cached in DAX.
+   -  DAX also maintains a query cache to store the results from Query and Scan operations.
+   -  DAX also maintains an LRU list for the query cache.
+   -  If the query cache becomes full, DAX evicts older result sets (even if they have not expired yet) to make room for new result sets.
+   -  If you specify zero as the query cache TTL setting, the query response will not be cached.
+   -  Write Operations : PutItem, BatchWiteItem, UpdateItem, DeleteItem  : writes are alwyas first on table then to DAX.
+   -  DAX maintains an item cache to store the results from GetItem and BatchGetItem operations.
+   -  If a write to DynamoDB fails for any reason, including throttling, the item is not cached in DAX. 
+   -  The item cache has a Time to Live (TTL) setting, which is 5 minutes by default.
+   -  DAX assigns a timestamp to every item that it writes to the item cache.
+   -  DAX also maintains a least recently used (LRU) list for the item cache.
+   -  If the item cache becomes full, DAX evicts older items (even if they haven't expired yet) to make room for new items
+   -  The LRU algorithm is always enabled for the item cache and is not user-configurable.
+   -  If you specify zero as the item cache TTL setting, items in the item cache will only be refreshed due to an LRU eviction or a "write-through" operation.
+   -  DAX does not recognize any DynamoDB operations for managing tables (such as CreateTable, UpdateTable, and so on). 
+   -  At runtime, the DAX client directs all of your application's DynamoDB API requests to the DAX cluster.
+   -  DAX not ideal for strong consistent reads, write-intensive apps, apps with own client-side logic for working with that caching solution.
+   -  Request rate limiting :
+      * If the number of requests sent to DAX exceeds the capacity of a node, DAX limits the rate at which it accepts additional requests by returning a ThrottlingException.
+      * DAX continuously evaluates CPU utilization to maintain healthy cluster.
+      * sends the ThrottledRequestCount metric that DAX publishes to Amazon CloudWatch. 
+   -  A DAX cluster in an AWS Region can only interact with DynamoDB tables that are in the same Region.
+   -  For production usage, we strongly recommend using DAX with at least three nodes, where each node is placed in different Availability Zones.
+   -  Three nodes are recommended in production for a DAX cluster to be fault-tolerant. (configured in Multi-AZ).
+   -  Monitoring DAX :
+      * CloudWatch alarms, logs, events,
+      * CloudTrial logs
+      * Use AWS CloudTrail to monitor AWS managed KMS key usage
+      * Monitor DynamoDB operations using CloudTrail - monitor CRUD operations
+      * Use DynamoDB Streams to monitor data plane operations
+        - Immediately after an item in the table is modified, a new record appears in the table's stream.
+        - AWS Lambda polls the stream and invokes your Lambda function synchronously when it detects new stream records.
+        - The Lambda function can perform any actions that you specify, such as sending a notification or initiating a workflow.
+      * Monitor DynamoDB configuration with AWS Config - continuously monitor and record configuration changes of your AWS resources.
+   -  Security :
+      * For users, applications, and other AWS services to access DynamoDB, they must include valid AWS credentials in their AWS API requests.
+      * Attach permissions policies to IAM identities (that is, users, groups, and roles) and thereby grant permissions to perform operations on DynamoDB resources.
+      * If you only require access to DynamoDB from within a VPC, you should use a VPC endpoint to limit access from only the required VPC.
+      * Resourse Based policies :  let you define access permissions by specifying who has access to each resource, and the actions they are allowed to perform on each resource.
+      * All user data stored in Amazon DynamoDB is fully encrypted at rest (AES-256) using encryption keys stored in AWS Key Management Service (AWS KMS).
+      * You can switch between these key types at any time, (AWS Owned, AWS managed, Customer owned)
+      * Data in transit: All your data in DynamoDB is encrypted in transit.(HTTPS or SSL/TLS)
+      * Data can be protected before sending it to DynamoDB using Clinet Side Encryption
+      * DynamoDB backups are encrypted, and the table that is restored from a backup also has encryption enabled.
+      * IAM policy conditions for fine-grained access control :
+         - Grant permissions to allow users read-only access to certain items and attributes
+         - Grant permissions to allow users write-only access to certain attributes in a table, based upon the identity of that user.       
+      * You can use web identity federation for authentication and authorization -removes the need for creating individual users instead use AWS STS for temp credentials.
+    
+   -  Best Practices :
+      1. Understand key differences before migrating relational DB to NoSql like DynamoDB
+      2. Consider Data size, Data Shape, Data Velocity before approaching NoSQl DB
+      3. For all active production tables, turn on Deletion protection
+      4. Using burst capacity effectively - Whenever available throughput is not fully utilized , DynamoDB reserves a portion of that unused capacity for later bursts of throughput to handle usage spikes.
+      5. DynamoDB currently retains up to 5 minutes (300 seconds) of unused read and write capacity.
+      6. Using write sharding to distribute workloads evenly --> add a random number to the end of the partition key values.
+      7. Keep the number of indexes to a minimum.Don't create secondary indexes on attributes that you don't query often.
+      8. Because secondary indexes consume storage and provisioned throughput, you should keep the size of the index as small as possible.
+      9. Take advantage of sparse indexes. useful for queries over a small subsection of a table.
+      10. DynamoDB default item size is400KB, if want to store larger item, try compressing or breaking the item into multiple items or store it as a object in Amazon S3 & S3 object identifier in DynamoDB.
+      11. utilize the ReturnConsumedCapacity parameter when writing items to monitor and alert on items sizes that approach the 400 KB.
+      12. keep the number of tables you use to a minimum.
+      13. However, for time series data, you can often best handle it by using one table per application per period.
+          * create one table for current period,  allocate required read and write capacity and the required indexes.
+          * Just before current period ends, prebuild new table and direct events to new table
+          * reduce provisioned write capacity to a lower value and Reduce the provisioned read capacity of earlier tables as they age.
+          * choose to archive or delete the tables whose contents are rarely or never needed.
+      14. Manage many-to-many relationships using Adjacency lists design pattern.
+          * When different entities of an application have a many-to-many relationship between them, the relationship can be modeled as an adjacency list.
+          * all top-level entities are represented using the partition key.
+          * Any relationships with other entities are represented as an item within the partition by setting the value of the sort key to the target entity ID
+          * A real-world example where this pattern has been useful is an invoicing system where invoices contain multiple bills. One bill can belong in multiple invoices. The partition key in this example 
+            is either an InvoiceID or a BillID. BillID partitions have all attributes specific to bills. InvoiceID partitions have an item storing invoice-specific attributes, and an item for each BillID 
+            that rolls up to the invoice.
+      15. Use hybrid DynamoDB-RDBMS, when you want to rely primarily on DynamoDB, but you also want to maintain a small relational system for one-time queries, or for operations that need special security 
+          or that are not time-critical.
+      16. avoid using a Scan operation on a large table or index with a filter.
+      17. Scan operations are less efficient than Query.
+      18. Scan - always scans entire table/index, and then filters values, adding the extra step of removing data from the result set.
+      19. Scan sometimes can also cause ProvisionedThroughputExceeded exception because it performs eventually consistent reads by default and can return up to 1 MB data = 128 read operations
+          if you request Strong consisten reads, it would use twice as much provisioned throughput—256 read operations causes sudden spikes in read activity.
+      20.Can minimize Scan impact by
+          * Reducing page size - set the page size for your request usnig a Limit parameter
+          * Isolate scan operation - create tables for distinct purposes,
+          * use parallel Scan if table size >= 20GB, RCUs are not fully being used or sequential scan are too slow.Multiple workers scan multiple data segments at the same time.
+          * Choosing TotalSegments - set value for TotalSegments based on specific data, provisioned capacity and performance requirement
+      21. keep the number of tables you use to a minimum.Recommended using a single table.
+      22. The per account limit cannot be increased above 10,000 tables per account.
+      23. Consider control plane limits for concurrent control plane operations
+      24. Work with AWS solution architects to validate your design patterns for multi-tenant designs. 
