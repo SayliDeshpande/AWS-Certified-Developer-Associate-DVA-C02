@@ -15,7 +15,7 @@ Application Integration:
 Compute:
 *	Amazon EC2
 *	AWS Elastic Beanstalk
-*	[AWS Lambda](#lambda)
+*	[AWS Lambda](https://github.com/SayliDeshpande/AWS-Certified-Developer-Associate-DVA-C02/blob/d4d395e80f49224107767f802b76c83d03e6bdd1/AWS%20Lambda/AWS%20Lambda.pdf)
 *	AWS Serverless Application Model (AWS SAM)
   
 Containers:
@@ -80,8 +80,7 @@ Storage:
 
 
  ## Amazon Athena <a id="athena"></a>
- ## Amazon Lambda
-[lambda](https://github.com/SayliDeshpande/AWS-Certified-Developer-Associate-DVA-C02/blob/d4d395e80f49224107767f802b76c83d03e6bdd1/AWS%20Lambda/AWS%20Lambda.pdf)
+
  ## Amazon DynamoDb <a id="dynamodb"></a>
 
 ![image](https://github.com/SayliDeshpande/AWS-Certified-Developer-Associate-DVA-C02/assets/44116052/77531a20-1b22-4ee5-aad6-b599fa99af0c)
