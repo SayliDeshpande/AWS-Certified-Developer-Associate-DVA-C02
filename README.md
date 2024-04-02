@@ -29,7 +29,7 @@ Database:
 *	[Amazon DynamoDB](#dynamodb)
 *	Amazon ElastiCache
 *	Amazon MemoryDB for Redis
-*	Amazon RDS
+*	[Amazon RDS](https://github.com/SayliDeshpande/AWS-Certified-Developer-Associate-DVA-C02/blob/557c8c690a2632bed9eff103f799bc7cbd4f251e/AWS%20RDS/Amazon%20RDS.pdf)
 
 Developer Tools:
 *	AWS Amplify
