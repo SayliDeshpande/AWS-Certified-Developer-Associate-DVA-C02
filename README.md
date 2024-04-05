@@ -26,7 +26,7 @@ Containers:
 
 Database:
 *	Amazon Aurora
-*	[Amazon DynamoDB](#dynamodb)
+*	[Amazon DynamoDB](https://github.com/SayliDeshpande/AWS-Certified-Developer-Associate-DVA-C02/blob/ec682fedddb88d978b7ff43a860f46081dff06e2/Amazon%20DynamoDB/Amazon%20DynamoDB.pdf)
 *	Amazon ElastiCache
 *	Amazon MemoryDB for Redis
 *	[Amazon RDS](https://github.com/SayliDeshpande/AWS-Certified-Developer-Associate-DVA-C02/blob/557c8c690a2632bed9eff103f799bc7cbd4f251e/AWS%20RDS/Amazon%20RDS.pdf)
