@@ -58,7 +58,7 @@ Management and Governance:
 Networking and Content Delivery:
 *	Amazon API Gateway
 *	Amazon CloudFront
-*	Elastic Load Balancing (ELB)
+*	[Elastic Load Balancing (ELB)](https://github.com/SayliDeshpande/AWS-Certified-Developer-Associate-DVA-C02/blob/3fe7268c00cbf2bde6e16f59f14b12bb28b02dfe/Elastic%20Load%20Balancing/Elastic%20Load%20Balancing.pdf)
 *	Amazon Route 53
 *	Amazon VPC
 
