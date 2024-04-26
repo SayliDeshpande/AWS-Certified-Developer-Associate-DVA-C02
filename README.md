@@ -49,7 +49,7 @@ Management and Governance:
 *	AWS AppConfig
 *	AWS CLI
 *	AWS Cloud Development Kit (AWS CDK)
-*	AWS CloudFormation
+*	[AWS CloudFormation](https://github.com/SayliDeshpande/AWS-Certified-Developer-Associate-DVA-C02/blob/909c194dd227ef5d0d46904f1c916c4604ba057a/AWS%20CloudFormation/AWS%20CloudFormation.pdf)
 *	AWS CloudTrail
 *	Amazon CloudWatch
 *	Amazon CloudWatch Logs
