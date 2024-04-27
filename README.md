@@ -56,7 +56,7 @@ Management and Governance:
 *	AWS Systems Manager
 
 Networking and Content Delivery:
-*	Amazon API Gateway
+*	[Amazon API Gateway](https://github.com/SayliDeshpande/AWS-Certified-Developer-Associate-DVA-C02/blob/8d14abb82d98cfa37b57eeefcb494c565f82da0b/API%20Gateway/API%20Gateway.pdf)
 *	Amazon CloudFront
 *	[Elastic Load Balancing (ELB)](https://github.com/SayliDeshpande/AWS-Certified-Developer-Associate-DVA-C02/blob/3fe7268c00cbf2bde6e16f59f14b12bb28b02dfe/Elastic%20Load%20Balancing/Elastic%20Load%20Balancing.pdf)
 *	Amazon Route 53
