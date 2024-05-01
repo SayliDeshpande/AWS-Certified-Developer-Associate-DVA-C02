@@ -43,7 +43,7 @@ Developer Tools:
 *	AWS CodePipeline
 *	AWS CodeStar
 *	Amazon CodeWhisperer
-*	AWS X-Ray
+*	[AWS X-Ray](https://github.com/SayliDeshpande/AWS-Certified-Developer-Associate-DVA-C02/blob/4a67d00c76ca9347014344ef0ac630d255ae2222/AWS%20X-Ray/AWS%20X-Ray.pdf)
 
 Management and Governance:
 *	AWS AppConfig
