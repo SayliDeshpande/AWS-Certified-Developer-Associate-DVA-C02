@@ -14,7 +14,7 @@ Application Integration:
   
 Compute:
 *	Amazon EC2
-*	AWS Elastic Beanstalk
+*	[AWS Elastic Beanstalk](https://github.com/SayliDeshpande/AWS-Certified-Developer-Associate-DVA-C02/blob/5d093f75da821a72791c48496053d4f88322a120/AWS%20Elastic%20Beanstalk/AWS%20Elastic%20Beanstalk.pdf)
 *	[AWS Lambda](https://github.com/SayliDeshpande/AWS-Certified-Developer-Associate-DVA-C02/blob/d4d395e80f49224107767f802b76c83d03e6bdd1/AWS%20Lambda/AWS%20Lambda.pdf)
 *	AWS Serverless Application Model (AWS SAM)
   
