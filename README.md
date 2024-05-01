@@ -65,7 +65,7 @@ Networking and Content Delivery:
 Security, Identity, and Compliance:
 *	AWS Certificate Manager (ACM)
 *	Amazon Cognito
-*	AWS Identity and Access Management (IAM)
+*	[AWS Identity and Access Management (IAM)](https://github.com/SayliDeshpande/AWS-Certified-Developer-Associate-DVA-C02/blob/1484f8e47a97a7a7d94a7bef4f414cb609a58465/AWS%20IAM/AWS%20Identity%20and%20Access%20Management.pdf)
 *	AWS Key Management Service (AWS KMS)
 *	AWS Private Certificate Authority
 *	AWS Secrets Manager
