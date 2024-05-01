@@ -1,7 +1,7 @@
 # AWS-Certified-Developer-Associate-DVA-C02
 ## Technologies and concepts that might appear on the exam
 Analytics:
-* [Amazon Athena](#athena)
+* Amazon Athena
 * Amazon Kinesis
 * Amazon OpenSearch Service
 
